@@ -1,5 +1,5 @@
 ## **Учебный проект: Веб-приложение "Продуктовый помощник"..**
-![example workflow](https://github.com/Dashynja0203foodgram-project-react/.github/workflows/foodgram_workflow.yml/badge.svg)
+![example workflow](https://github.com/Dashynja0203/foodgram-project-react/.github/workflows/foodgram_workflow.yml/badge.svg)
 ### Где посмотреть проект 
 Посмотреть проект можно по адресу: 51.250.30.119
 ### **Как запустит проект**
