@@ -78,8 +78,6 @@ jobs:
             sudo docker-compose up -d --build
             sudo docker-compose exec -T backend python manage.py migrate
             sudo docker-compose exec backend python manage.py collectstatic --no-input
-            sudo docker system prune -af
-            sudo docker volume prune -f
 
   send_message:
     runs-on: ubuntu-latest
