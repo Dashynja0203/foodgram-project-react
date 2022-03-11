@@ -29,11 +29,12 @@ class TagViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
-    queryset = Recipe.objects.all()
     serializer_class = CreateRecipeSerializer
     permission_classes = [AuthorOrReadOnly]
     filter_backends = [DjangoFilterBackend]
     filter_class = RecipeFilter
+    queryset = Recipe.objects.all()
+
     pagination_class = PageNumberPaginatorModified
 
     def perform_create(self, serializer):
@@ -46,11 +47,12 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
 
 class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Ingredient.objects.all()
-    serializer_class = IngredientSerializer
     permission_classes = [AllowAny, ]
     filter_backends = [SearchFilter]
     search_fields = ['name', ]
+    queryset = Ingredient.objects.all()
+    serializer_class = IngredientSerializer
+
 
 
 @api_view(['get'])
@@ -160,7 +162,6 @@ class DownloadPurchaseList(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        #  purchases -> recipes -> ingredients
         recipes = request.user.purchases.all().values_list('recipe', flat=True)
         ingredients = IngredientRecipe.objects.filter(
             recipe__in=recipes).all().values_list('ingredient', flat=True)
@@ -184,7 +185,7 @@ class DownloadPurchaseList(APIView):
             wishlist.append(f'{item} ({purchase_list[item]["unit"]}) — '
                             f'{purchase_list[item]["amount"]} \n')
         wishlist.append('')
-        wishlist.append('Приятных покупок!')
+        wishlist.append('Хороших покупок!')
         response = HttpResponse(wishlist, 'Content-Type: application/pdf')
         response['Content-Disposition'] = 'attachment; filename="wishlist.pdf"'
         return response
