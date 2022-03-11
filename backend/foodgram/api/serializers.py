@@ -3,7 +3,6 @@ from django.db.models import F
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 from rest_framework.generics import get_object_or_404
-
 from recipes.models import (Favorite, Ingredient, IngredientRecipe,
                             PurchaseList, Recipe, Subscribe, Tag)
 from users.serializers import UserSerializer
