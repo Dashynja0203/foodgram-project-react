@@ -31,7 +31,7 @@ docker-compose exec backend python manage.py collectstatic --no-input
 
 Супер юзер: 
 ```
-Username: Daria
+Username: t9dashynja8@yandex.ru
 Password: Daria
 ```
 
