@@ -21,9 +21,16 @@ DB_PORT=# порт для подключения к БД
 `docker-compose up -d --build `
 4. Выполните по очереди команды:
 ```
-docker-compose exec web python manage.py migrate
-docker-compose exec web python manage.py createsuperuser
-docker-compose exec web python manage.py collectstatic --no-input 
+docker-compose exec backend python manage.py migrate
+docker-compose exec backend python manage.py createsuperuser
+docker-compose exec backend python manage.py collectstatic --no-input 
 ```
 Готово! проект запущен на локальном хосте.
+
+
+Супер юзер: 
+```
+Username: Daria
+Password: Daria
+```
 
