@@ -10,18 +10,14 @@ services:
 
 
   frontend:
-    build:
-      context: ../frontend
-      dockerfile: Dockerfile
+    image: dasyhynjalala/frontend:latest
     volumes:
       - ../frontend/:/app/result_build/
   backend:
+    image: dasyhynjalala/foodgram:latest
     restart: always
     depends_on:
       - db
-    build:
-      context: ../backend/foodgram
-      dockerfile: Dockerfile
     volumes:
       - static_value:/backend/backend_static/
       - media_value:/backend/backend_media/
