@@ -54,7 +54,6 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = IngredientSerializer
 
 
-
 @api_view(['get'])
 @permission_classes([IsAuthenticated])
 def show_subscribs(request):
@@ -178,7 +177,7 @@ class DownloadPurchaseList(APIView):
                 }
             else:
                 purchase_list[name]['amount'] = (
-                    purchase_list[name]['amount'] + amount
+                        purchase_list[name]['amount'] + amount
                 )
         wishlist = []
         for item in purchase_list:

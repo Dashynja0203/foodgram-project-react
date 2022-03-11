@@ -21,7 +21,7 @@ class RecipeFilter(filters.FilterSet):
             return Recipe.objects.filter(favorited_by__user=self.request.user)
         return Recipe.objects.all()
 
-    def get_in_shopping_cart(self,value):
+    def get_in_shopping_cart(self, value):
         if value:
             return Recipe.objects.filter(customers__user=self.request.user)
         return Recipe.objects.all()
