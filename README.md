@@ -20,6 +20,7 @@ DB_PORT=# порт для подключения к БД
 3. Запускаем сборку из папки с файлом **docker-compose.yaml**: 
 `docker-compose up -d --build `
 4. Выполните по очереди команды:
+
 ```
 docker-compose exec backend python manage.py migrate
 docker-compose exec backend python manage.py createsuperuser
