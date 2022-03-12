@@ -3,8 +3,9 @@ from django.db.models import F
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 from rest_framework.generics import get_object_or_404
+
 from recipes.models import (Favorite, Ingredient, IngredientRecipe,
-                            PurchaseList, Recipe, Subscribe, Tag)
+                              PurchaseList, Recipe, Subscribe, Tag)
 from users.serializers import UserSerializer
 
 User = get_user_model()
@@ -235,17 +236,17 @@ class SubscribeSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         request = self.context['request']
-        if request.method == 'GET':
-            if request.user == attrs['author']:
-                raise serializers.ValidationError(
-                    'Невозможно подписаться на себя'
-                )
-            if Subscribe.objects.filter(
-                    user=request.user,
-                    author=attrs['author']
-            ).exists():
-                raise serializers.ValidationError('Вы уже подписаны')
-        return attrs
+        if request.method != 'GET':
+            return attrs
+        if request.user == attrs['author']:
+            raise serializers.ValidationError(
+                'Невозможно подписаться на себя'
+            )
+        if Subscribe.objects.filter(
+                user=request.user,
+                author=attrs['author']
+        ).exists():
+            raise serializers.ValidationError('Вы уже подписаны')
 
     def to_representation(self, instance):
         return SubscribersSerializer(
