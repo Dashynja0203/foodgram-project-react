@@ -14,9 +14,7 @@ services:
     volumes:
       - ../frontend/:/app/result_build/
   backend:
-    build:
-      context: ../backend/foodgram
-      dockerfile: Dockerfile
+    image: dasyhynjalala/foodgram:latest
     restart: always
     command: >
       bash -c "python manage.py migrate &&
