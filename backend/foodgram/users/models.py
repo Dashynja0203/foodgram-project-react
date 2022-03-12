@@ -6,7 +6,7 @@ class User(AbstractUser):
     email = models.EmailField(
         'email адрес',
         unique=True,
-        max_length = 254,
+        max_length=254,
     )
     username = models.CharField(
         max_length=150,

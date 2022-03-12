@@ -62,7 +62,6 @@ class Recipe(models.Model):
         'Время приготовления', validators=[MinValueValidator(1)],
     )
 
-
     class Meta:
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
@@ -84,7 +83,7 @@ class IngredientRecipe(models.Model):
         on_delete=models.CASCADE
     )
     amount = models.IntegerField('Количество',
-                                 validators=[MinValueValidator(1)],)
+                                 validators=[MinValueValidator(1)], )
 
     class Meta:
         verbose_name = 'Ингредиент рецепта'

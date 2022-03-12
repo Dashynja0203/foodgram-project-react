@@ -4,8 +4,9 @@ from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 from rest_framework.generics import get_object_or_404
 
-from recipes.models import (Favorite, Ingredient, IngredientRecipe,
-                              PurchaseList, Recipe, Subscribe, Tag)
+from recipes.models import (Favorite, Ingredient,
+                            IngredientRecipe, PurchaseList,
+                            Recipe, Subscribe, Tag)
 from users.serializers import UserSerializer
 
 User = get_user_model()
@@ -247,6 +248,7 @@ class SubscribeSerializer(serializers.ModelSerializer):
                 author=attrs['author']
         ).exists():
             raise serializers.ValidationError('Вы уже подписаны')
+        return attrs
 
     def to_representation(self, instance):
         return SubscribersSerializer(
