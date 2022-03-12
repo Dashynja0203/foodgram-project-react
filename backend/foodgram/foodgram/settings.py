@@ -1,22 +1,14 @@
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY',
                        default='r^bjd6_(*n1!ckvchbn_jgp=y$9dpm=2t=1*tazajnaxj=)+9$')
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = ['*']
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -113,38 +105,33 @@ DJOSER = {
     'HIDE_USERS': False,
     'SERIALIZERS': {
         'user': 'users.serializers.UserSerializer',
-        'current_user': 'users.serializers.UserSerializer'
+        'current_user': 'users.serializers.UserSerializer',
+        'user_list': 'users.serializers.UserSerializer',
+        'user_create': 'users.serializers.UserSerializer',
+
     },
 
-    'PERMISSIONS': {
-        'activation': ['rest_framework.permissions.AllowAny'],
-        'password_reset': ['rest_framework.permissions.AllowAny'],
-        'password_reset_confirm': ['rest_framework.permissions.AllowAny'],
-        'set_password': ['djoser.permissions.CurrentUserOrAdmin'],
-        'username_reset': ['rest_framework.permissions.AllowAny'],
-        'username_reset_confirm': ['rest_framework.permissions.AllowAny'],
-        'set_username': ['djoser.permissions.CurrentUserOrAdmin'],
-        'user_create': ['rest_framework.permissions.AllowAny'],
-        'user_delete': ['djoser.permissions.CurrentUserOrAdmin'],
-        'user': ['rest_framework.permissions.AllowAny'],
-        'user_list': ['rest_framework.permissions.AllowAny'],
-        'token_create': ['rest_framework.permissions.AllowAny'],
-        'token_destroy': ['rest_framework.permissions.IsAuthenticated'],
+
+    'PERMISSIONS':
+        {
+            'resipe': ('api.permissions.AuthorOrReadOnly,',),
+            'recipe_list': ('api.permissions.AuthorOrReadOnly',),
+            'user': ('api.permissions.AuthorOrReadOnly',),
+            'user_list': ('api.permissions.AuthorOrReadOnly',),
     }
+
 }
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
-    'DEFAULT_FILTER_BACKENDS': [
-        'django_filters.rest_framework.DjangoFilterBackend',
-    ],
+
 }
 
 AUTH_USER_MODEL = 'users.User'

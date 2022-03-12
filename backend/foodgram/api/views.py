@@ -1,9 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+from djoser.views import UserViewSet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, viewsets
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -21,6 +22,27 @@ from .serializers import (CreateRecipeSerializer, FavoriteSerializer,
                           SubscribeSerializer, TagSerializer)
 
 User = get_user_model()
+
+
+class UserViewSet(UserViewSet):
+    pagination_class = PageNumberPaginatorModified
+    add_serializer = SubscribeSerializer
+
+    @action(methods=('get', 'post', 'delete',), detail=True)
+    def subscribe(self, request, id):
+        return self.add_del_obj(id, 'subscribe')
+
+    @action(methods=('get',), detail=False)
+    def subscriptions(self, request):
+        user = self.request.user
+        if user.is_anonymous:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        authors = user.subscribe.all()
+        pages = self.paginate_queryset(authors)
+        serializer = SubscribeSerializer(
+            pages, many=True, context={'request': request}
+        )
+        return self.get_paginated_response(serializer.data)
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):

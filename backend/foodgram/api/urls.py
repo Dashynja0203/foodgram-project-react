@@ -3,13 +3,14 @@ from rest_framework.routers import DefaultRouter
 
 from .views import (DownloadPurchaseList, FavoriteViewSet, IngredientViewSet,
                     PurchaseListView, RecipeViewSet, SubscribeView, TagViewSet,
-                    show_subscribs)
+                    show_subscribs, UserViewSet)
 
 router = DefaultRouter()
 
 router.register('tags', TagViewSet, basename='tags')
 router.register('recipes', RecipeViewSet, basename='recipes')
 router.register('ingredients', IngredientViewSet, basename='ingredients')
+router.register('users', UserViewSet, 'users')
 
 urlpatterns = [
     path('users/subscriptions/',
@@ -22,5 +23,6 @@ urlpatterns = [
          PurchaseListView.as_view(), name='add_recipe_to_shopping_cart'),
     path('recipes/download_shopping_cart/',
          DownloadPurchaseList.as_view(), name='dowload_shopping_cart'),
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('auth/', include('djoser.urls.authtoken')),
 ]
