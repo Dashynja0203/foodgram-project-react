@@ -62,7 +62,7 @@ class Ingredient(models.Model):
 
 
 class Recipe(models.Model):
-    name = models.harField(
+    name = models.CharField(
         verbose_name='Название блюда',
         max_length=150,
     )
