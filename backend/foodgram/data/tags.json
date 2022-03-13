@@ -1,0 +1,26 @@
+[
+    {
+        "model": "recipes.tag",
+        "pk": 31,
+        "fields":
+        {   "name": "Обед",
+            "color": "FFF000",
+            "slug": "launch"},
+    },
+    {
+        "model": "recipes.tag",
+        "pk": 32,
+        "fields":
+        {   "name": "Завтрак",
+            "color": "00FF00",
+            "slug": "breakfast"},
+    },
+    {
+        "model": "recipes.tag",
+        "pk": 33,
+        "fields":
+        {   "name": "Ужин",
+            "color": "FF0000",
+            "slug": "dinner"},
+    },
+]
