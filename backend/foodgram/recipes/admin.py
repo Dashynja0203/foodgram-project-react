@@ -1,51 +1,72 @@
-from django.contrib import admin
+from django.contrib.admin import ModelAdmin, TabularInline, register
+from django.utils.safestring import mark_safe
 
-from .models import (Favorite, Ingredient, IngredientRecipe, PurchaseList,
-                     Recipe, Subscribe, Tag)
-
-
-class IngredientRecipeInLine(admin.TabularInline):
-    model = IngredientRecipe
-    extra = 1
+from .models import AmountIngredient, Ingredient, Recipe, Tag
 
 
-class TagAdmin(admin.ModelAdmin):
-    list_display = ('name', 'color',)
-    search_fields = ('name', 'color',)
-    list_filter = ('color',)
+class IngredientInline(TabularInline):
+    model = AmountIngredient
+    extra = 2
 
 
-class IngredientRecipeAdmin(admin.ModelAdmin):
-    list_display = ('ingredient', 'recipe',)
-    list_select_related = ('ingredient', 'recipe',)
-    search_fields = ('recipe', 'ingredient',)
+@register(AmountIngredient)
+class LinksAdmin(ModelAdmin):
+    pass
 
 
-class FavoriteAdmin(admin.ModelAdmin):
-    list_display = ('user', 'recipe',)
-    list_select_related = ('user', 'recipe',)
+@register(Ingredient)
+class IngredientAdmin(ModelAdmin):
+    list_display = (
+        'name', 'measurement_unit',
+    )
+    search_fields = (
+        'name',
+    )
+    list_filter = (
+        'name',
+    )
+
+    save_on_top = True
+    empty_value_display = 'Значение не указано'
 
 
-class IngredientAdmin(admin.ModelAdmin):
-    inlines = (IngredientRecipeInLine,)
-    list_display = ('name', 'measurement_unit')
-    list_filter = ('name',)
+@register(Recipe)
+class RecipeAdmin(ModelAdmin):
+    list_display = (
+        'name', 'author', 'get_image',
+    )
+    fields = (
+        ('name', 'cooking_time',),
+        ('author', 'tags',),
+        ('text',),
+        ('image',),
+    )
+    raw_id_fields = ('author',)
+    search_fields = (
+        'name', 'author',
+    )
+    list_filter = (
+        'name', 'author__username',
+    )
+
+    inlines = (IngredientInline,)
+    save_on_top = True
+    empty_value_display = 'Значение не указано'
+
+    def get_image(self, obj):
+        return mark_safe(f'<img src={obj.image.url} width="80" hieght="30"')
+
+    get_image.short_description = 'Изображение'
 
 
-class RecipeAdmin(admin.ModelAdmin):
-    inlines = (IngredientRecipeInLine,)
-    list_display = ('author', 'name')
-    list_filter = ('author', 'name', 'tags')
-    empty_value_display = '-пусто-'
+@register(Tag)
+class TagAdmin(ModelAdmin):
+    list_display = (
+        'name', 'color', 'slug',
+    )
+    search_fields = (
+        'name', 'color'
+    )
 
-    def is_favorite(self, obj):
-        return obj.favorites.count()
-
-
-admin.site.register(Tag, TagAdmin)
-admin.site.register(Ingredient, IngredientAdmin)
-admin.site.register(Recipe, RecipeAdmin)
-admin.site.register(IngredientRecipe, IngredientRecipeAdmin)
-admin.site.register(Favorite, FavoriteAdmin)
-admin.site.register(PurchaseList)
-admin.site.register(Subscribe)
+    save_on_top = True
+    empty_value_display = 'Значение не указано'

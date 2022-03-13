@@ -5,10 +5,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.getenv('SECRET_KEY',
                        default='r^bjd6_(*n1!ckvchbn_jgp=y$9dpm=2t=1*tazajnaxj=)+9$')
-DEBUG = True
+DEBUG = False
 
 
 ALLOWED_HOSTS = ['*']
+
+WSGI_APPLICATION = 'foodgram.wsgi.application'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -23,7 +25,8 @@ INSTALLED_APPS = [
     'djoser',
     'users',
     'api',
-    'recipes'
+    'recipes',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -99,30 +102,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-DJOSER = {
-    'LOGIN_FIELD': 'email',
-
-    'HIDE_USERS': False,
-    'SERIALIZERS': {
-        'user': 'users.serializers.UserSerializer',
-        'current_user': 'users.serializers.UserSerializer',
-        'user_list': 'users.serializers.UserSerializer',
-        'user_create': 'users.serializers.UserSerializer',
-
-    },
 
 
-    'PERMISSIONS':
-        {
-            'resipe': ('api.permissions.AuthorOrReadOnly,',),
-            'recipe_list': ('api.permissions.AuthorOrReadOnly',),
-            'user': ('api.permissions.AuthorOrReadOnly',),
-            'user_list': ('api.permissions.AuthorOrReadOnly',),
-    }
-
-}
-# Internationalization
-# https://docs.djangoproject.com/en/2.2/topics/i18n/
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
@@ -134,16 +115,28 @@ REST_FRAMEWORK = {
 
 }
 
-AUTH_USER_MODEL = 'users.User'
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'HIDE_USERS': False,
+    'SERIALIZERS': {
+        'user': 'api.serializers.UserSerializer',
+        'current_user': 'api.serializers.UserSerializer',
+        'user_list': 'api.serializers.UserSerializer',
+        'user_create': 'api.serializers.UserSerializer',
+    },
+    'PERMISSIONS': {
+        'resipe': ('api.permissions.AuthorOrReadOnly,',),
+        'recipe_list': ('api.permissions.AuthorOrReadOnly',),
+        'user': ('api.permissions.OwnerUserOrReadOnly',),
+        'user_list': ('api.permissions.OwnerUserOrReadOnly',),
+    },
 
+}
+
+AUTH_USER_MODEL = 'users.MyUser'
 LANGUAGE_CODE = 'ru'
-
-TIME_ZONE = 'UTC'
-
+TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
-
-USE_L10N = True
-
 USE_TZ = True
 
 STATIC_URL = '/backend_static/'
