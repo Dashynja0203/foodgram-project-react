@@ -19,8 +19,8 @@ class Migration(migrations.Migration):
                 ('amount', models.PositiveSmallIntegerField(default=0, validators=[django.core.validators.MinValueValidator(1, 'Нужно хоть какое-то количество.'), django.core.validators.MaxValueValidator(10000, 'Слишком много!')], verbose_name='Количество')),
             ],
             options={
-                'verbose_name': 'Ингридиент',
-                'verbose_name_plural': 'Количество ингридиентов',
+                'verbose_name': 'ингредиент',
+                'verbose_name_plural': 'Количество ингредиентов',
                 'ordering': ('recipe',),
             },
         ),
@@ -28,12 +28,12 @@ class Migration(migrations.Migration):
             name='Ingredient',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=200, verbose_name='Ингридиент')),
+                ('name', models.CharField(max_length=200, verbose_name='ингредиент')),
                 ('measurement_unit', models.CharField(max_length=200, verbose_name='Единицы измерения')),
             ],
             options={
-                'verbose_name': 'Ингридиент',
-                'verbose_name_plural': 'Ингридиенты',
+                'verbose_name': 'ингредиент',
+                'verbose_name_plural': 'ингредиенты',
                 'ordering': ('name',),
             },
         ),

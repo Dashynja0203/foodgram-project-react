@@ -13,6 +13,10 @@ def calc_ingredients_amount(recipe, ingredients):
 
 
 def check_value_validate(value, clas=None):
+    if int(value) <= 0:
+        raise ValidationError(
+            'Вес ингредиента: Убедитесь, что это значение больше либо равно 1.'
+        )
     if not str(value).isdecimal():
         raise ValidationError(
             f'{value} должен содержать цифру'

@@ -15,15 +15,17 @@ services:
       - ./.env
 
   backend:
-    image: dasyhynjalala/foodgram:latest
+    build:
+      context: ../backend/foodgram
+      dockerfile: Dockerfile
     restart: always
     command: >
       bash -c "python manage.py migrate &&
       python manage.py collectstatic --noinput &&
       gunicorn --bind 0:8000 foodgram.wsgi"
     volumes:
-      - static_value:/backend/backend_static/
-      - media_value:/backend/backend_media/
+      - static_value:/app/backend_static/
+      - media_value:/app/backend_media/
     depends_on:
       - db
     env_file:

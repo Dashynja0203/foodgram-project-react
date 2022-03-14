@@ -38,7 +38,7 @@ class Tag(models.Model):
 
 class Ingredient(models.Model):
     name = models.CharField(
-        verbose_name='Ингридиент',
+        verbose_name='ингредиент',
         max_length=150,
     )
     measurement_unit = models.CharField(
@@ -47,8 +47,8 @@ class Ingredient(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Ингридиент'
-        verbose_name_plural = 'Ингридиенты'
+        verbose_name = 'ингредиент'
+        verbose_name_plural = 'ингредиенты'
         ordering = ('name',)
         constraints = (
             models.UniqueConstraint(
@@ -146,13 +146,13 @@ class AmountIngredient(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Ингридиент'
-        verbose_name_plural = 'Количество ингридиентов'
+        verbose_name = 'ингредиент'
+        verbose_name_plural = 'Количество ингредиентов'
         ordering = ('recipe',)
         constraints = (
             models.UniqueConstraint(
                 fields=('recipe', 'ingredients',),
-                name='\n%(app_label)s_%(class)s ingredient alredy added\n',
+                name='\n%(app_label)s_%(class)s ingredient already added\n',
             ),
         )
 
