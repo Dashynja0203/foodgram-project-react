@@ -29,9 +29,5 @@ docker-compose exec backend python manage.py collectstatic --no-input
 Готово! проект запущен на локальном хосте.
 
 
-Супер юзер: 
-```
-Username: t9dashynja8@yandex.ru
-Password: Daria
-```
+
 
